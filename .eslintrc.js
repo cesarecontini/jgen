@@ -21,5 +21,7 @@ module.exports = {
     "plugins": [
         "react"
     ],
-    "rules": {}
+    "rules": {
+        "indent": ["error", "tab"]
+    }
 };
