@@ -11,25 +11,24 @@ import DbService from '../services/DbService';
 
 async function getSettings () {
 	let basePackage = await new DbService().getSetting('basePackage');
-    let controllersPackageName = await new DbService().getSetting('controllersPackageName');
+    let servicesPackageName = await new DbService().getSetting('servicesPackageName');
     
-    console.log('controllersPackageName', controllersPackageName)
 	return {
         basePackage,
-        controllersPackageName
+        servicesPackageName
     };
 }
 
-export default class ControllerGeneratorComponent extends React.Component {
+export default class ServiceGeneratorComponent extends React.Component {
     state = {
 		basePackage: 'my.package',
-		controllerName: 'MyController',
-		constants: `String MY_CONSTANT = "template"`,
-		autowiredServices: `MyControllerService myControllerService`,
-		endpoints: `GET /some-path getSomePathPage template-view\nGET /another-path getAnotherPathPage another-template-view\nPOST /post-path postForm /redirect-to`,
+		serviceName: 'MyService',
+		constants: `String MY_CONSTANT = "a constant"`,
+		autowiredServices: `JpaRepository jpaRepository`,
+		serviceMethods: `public void doSomething\npublic void doSomethingElse\npublic String getFirstName`,
 
-        controllerClass: null,
-        controllerTestClass: null
+        serviceClass: null,
+        serviceTestClass: null
     };
 
     constructor() {
@@ -42,48 +41,48 @@ export default class ControllerGeneratorComponent extends React.Component {
     handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
     handleSubmit = () => {
-        const { basePackage, controllerName, controllersPackageName, constants, autowiredServices, endpoints } = this.state;
-        const controllerClass = generationService.generateControllerClass({
+        const { basePackage, serviceName, servicesPackageName, constants, autowiredServices, serviceMethods } = this.state;
+        const serviceClass = generationService.generateServiceClass({
 			basePackage,
-            controllerName,
-            controllersPackageName,
+            serviceName,
+            servicesPackageName,
 			constants,
 			autowiredServices,
-			endpoints
+			serviceMethods
         });
         
-        const controllerTestClass = generationService.generateControllerTestClass({
+        const serviceTestClass = generationService.generateServiceTestClass({
 			basePackage,
-            controllerName,
-            controllersPackageName,
+            serviceName,
+            servicesPackageName,
 			constants,
 			autowiredServices,
-			endpoints
+			serviceMethods
 		});
         
         this.setState({
-            controllerClass: controllerClass,
-            controllerTestClass: controllerTestClass
+            serviceClass: serviceClass,
+            serviceTestClass: serviceTestClass
         })
     }
 
     render() {
 
         const { 
-			controllerName, 
+			serviceName, 
 			constants, 
 			autowiredServices,
-			endpoints, 
-            controllerClass,
-            controllerTestClass
+			serviceMethods, 
+            serviceClass,
+            serviceTestClass
          } = this.state;
 
         return (
             <div>
                 <Grid columns={1} padded>
                     <Grid.Column>
-                        <HeaderComponent title='CONTROLLER GENERATOR'
-                            subTitle='Generate a Spring Controller and optionally its service and test classes.' />
+                        <HeaderComponent title='SERVICE GENERATOR'
+                            subTitle='Generate a Spring Service and its test classe.' />
                     </Grid.Column>
                 </Grid>
                 <Grid columns={2} padded>
@@ -93,10 +92,10 @@ export default class ControllerGeneratorComponent extends React.Component {
                             onSubmit={this.handleSubmit}>
 
 							<Form.Input
-                                label='Controller Name'
-                                placeholder='Controller Name'
-                                name='controllerName'
-                                value={controllerName}
+                                label='Service Name'
+                                placeholder='Service Name'
+                                name='serviceName'
+                                value={serviceName}
                                 onChange={this.handleChange}
                             />
                             <Form.TextArea
@@ -118,12 +117,12 @@ export default class ControllerGeneratorComponent extends React.Component {
                                 onChange={this.handleChange}
                             />
 							<Form.TextArea
-                                label="Endpoints"
-								placeholder='Endpoints'
+                                label="Service Methods"
+								placeholder='Service Methods'
 								
-                                name='endpoints'
+                                name='serviceMethods'
                                 rows='3'
-                                value={endpoints}
+                                value={serviceMethods}
                                 onChange={this.handleChange}
                             />
 
@@ -135,15 +134,15 @@ export default class ControllerGeneratorComponent extends React.Component {
 
                     <Grid.Column>
 
-                        {controllerClass &&
+                        {serviceClass &&
                             <div>
                                 <CopyToClipboardComponent 
-                                    title='CONTROLLER CLASS' 
-                                    textToCopy={controllerClass} />
+                                    title='SERVICE CLASS' 
+                                    textToCopy={serviceClass} />
 
                                 <CopyToClipboardComponent 
-                                    title='CONTROLLER TEST CLASS' 
-                                    textToCopy={controllerTestClass} />
+                                    title='SERVICE TEST CLASS' 
+                                    textToCopy={serviceTestClass} />
                             </div>
                             
                         }

@@ -16,8 +16,10 @@ export default class CopyToClipboardComponent extends React.Component {
 
 		let { textToCopy, title } = this.props;
 		let { copied } = this.state; 
+		const textLength = textToCopy.split('\n').length;
 
 		return (
+
 			<div>
 
 				<Form size="large">
@@ -25,8 +27,8 @@ export default class CopyToClipboardComponent extends React.Component {
 						label={title}
 						placeholder={title}
 						name='textToCopy'
-						rows={textToCopy.split('\n').length || 15}
-						disabled
+						rows={textLength < 15 ? textLength : 15}
+						
 						value={textToCopy}
 					/>
 

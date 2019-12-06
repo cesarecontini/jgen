@@ -15,6 +15,7 @@ export default class DbService {
 		settings.count().then(settingsRecords => {
 			if(settingsRecords === 0) {
 				settings.bulkAdd([
+					{name: 'Base package', value: 'my.package', propertyName: 'basePackage'},
 					{name: 'Controllers package name', value: 'controller', propertyName: 'controllersPackageName'},
 					{name: 'Services package name', value: 'service', propertyName: 'servicesPackageName'},
 					{name: 'Forms package name', value: 'form', propertyName: 'formsPackageName'}
@@ -25,6 +26,11 @@ export default class DbService {
 
 	async getSettings() {
 		return await this.db.settings.toArray();
+	}
+
+	async getSetting(key) {
+		let p = await this.db.settings.where({propertyName: key})
+		return await p.first(s => s.value);
 	}
 
 	async setSettings(settings) {

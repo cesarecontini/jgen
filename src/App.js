@@ -5,6 +5,7 @@ import { Grid } from 'semantic-ui-react';
 import MenuComponent from './components/MenuComponent';
 import HtmlToJUnitComponent from './components/HtmlToJUnitComponent';
 import ControllerGeneratorComponent from './components/ControllerGeneratorComponent';
+import ServiceGeneratorComponent from './components/ServiceGeneratorComponent';
 import SettingsComponent from './components/SettingsComponent';
 
 import DbService from './services/DbService';
@@ -26,6 +27,9 @@ function App() {
 							</Route>
 							<Route path='/generate-controller'>
 								<ControllerGeneratorComponent />
+							</Route>
+							<Route path='/generate-service'>
+								<ServiceGeneratorComponent />
 							</Route>
 							<Route path='/settings'>
 								<SettingsComponent />
