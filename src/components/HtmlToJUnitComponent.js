@@ -11,7 +11,11 @@ import junitService from '../services/JunitService';
 export default class HtmlToJUnitComponent extends React.Component {
     state = {
         path: '/some-path',
-        html: '<div id="element-id">a simple DIV element</div>',
+        html: `<ul id="fruits">
+                    <li id="apple">Apple</li>
+                    <li id="orange">Orange</li>
+                    <li id="pear">Pear</li>
+                </ul>`,
         junitTest: ''
     };
 
@@ -67,9 +71,9 @@ export default class HtmlToJUnitComponent extends React.Component {
                     <Grid.Column>
 
                         {junitTest &&
-                                <CopyToClipboardComponent 
-                                    title='GENERATED TEST' 
-                                    textToCopy={junitTest} />
+                            <CopyToClipboardComponent
+                                title='GENERATED TEST'
+                                textToCopy={junitTest} />
                         }
                     </Grid.Column>
                 </Grid>

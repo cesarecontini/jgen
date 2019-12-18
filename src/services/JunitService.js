@@ -1,5 +1,5 @@
-import jquery from 'jquery';
 import Formatter from 'auto-format';
+import cheerio from 'cheerio';
 
 const isTagToExclude = (tagName, tagsToExclude) => {
 	return tagsToExclude.indexOf(tagName.toLowerCase()) !== -1;
@@ -19,11 +19,13 @@ export default (path, html) => {
         mockMvc.perform(MockMvcRequestBuilders.get("${path}"))
         `;
 
-	jquery(html).filter(childElementsSelector)
+	const $ = cheerio.load(html);
+
+	$('*').filter(childElementsSelector)
 		.each(function () {
-			const tagName = jquery(this).prop('tagName');
-			const id = this.id;
-			const text = jquery(this).text();
+			const tagName = $(this).prop('tagName');
+			const id = $(this).attr('id');
+			const text = $(this).text();
 			const isIdSet = id && id !== '';
 
 			if (isIdSet) {
@@ -34,82 +36,88 @@ export default (path, html) => {
 			if (isIdSet && !isTagToExclude(tagName, tagsToExclude)) {
 				output +=
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']")
-                        .string(Matchers.equalToIgnoringWhiteSpace("${text
-		.replace(/^\s+|\s+$/g, '')
-		.replace(/\n/g, ' ')}")))
-                        `;
+						.string(Matchers.equalToIgnoringWhiteSpace("${text.replace(/^\s+|\s+$/g, '').replace(/\n/g, ' ')}")))
+						
+					`;
 			}
 
 			if (tagName && tagName.toLowerCase() === 'a') {
-				const href = jquery(this).attr('href');
+				const href = $(this).attr('href');
 				output +=
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/@href")
-                    .string(Matchers.equalToIgnoringWhiteSpace("${href}")))
-                    `;
+						.string(Matchers.equalToIgnoringWhiteSpace("${href}")))
+						
+					`;
 			}
 
 			if (tagName && tagName.toLowerCase() === 'form') {
-				const action = jquery(this).attr('action');
-				const method = jquery(this).attr('method');
+				const action = $(this).attr('action');
+				const method = $(this).attr('method');
 				output +=
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/@action")
-                    .string(Matchers.equalToIgnoringWhiteSpace("${action}")))
+						.string(Matchers.equalToIgnoringWhiteSpace("${action}")))
+						
                     `;
 				output +=
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/@method")
-                    .string(Matchers.equalToIgnoringWhiteSpace("${method}")))
+						.string(Matchers.equalToIgnoringWhiteSpace("${method}")))
+						
                     `;
 			}
 
 			if (tagName && tagName.toLowerCase() === 'input') {
-				const type = jquery(this).attr('type');
+				const type = $(this).attr('type');
 				output +=
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/@type").string("${type}"))
-                    `;
+					
+					`;
 
 				if (type === 'radio' || type === 'checkbox') {
-					const checked = jquery(this).attr('checked');
+					const checked = $(this).attr('checked');
 					if (checked) {
 						output +=
                             `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/@checked").string("${checked}"))
-                             `;
+							 
+							`;
 					}
 				}
 			}
 
 			if (tagName && tagName.toLowerCase() === 'select') {
-				const options = jquery(this).find('option');
+				const options = $(this).find('option');
 				output +=
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/option").nodeCount(${options.length}))
-                    `;
+					
+					`;
 				options.each(function (i) {
 
 					output +=
                         `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/option[${i + 1}]").exists())
-                        `;
+						
+						`;
 
-					const optionText = jquery(this).text();
+					const optionText = $(this).text();
 
 					if (optionText) {
-						const optionValue = jquery(this).attr('value');
+						const optionValue = $(this).attr('value');
 						output +=
                             `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/option[${i + 1}]")
-                            .string(Matchers.equalToIgnoringWhiteSpace("${optionText}")))
+                            	.string(Matchers.equalToIgnoringWhiteSpace("${optionText}")))
                             
                             `;
 
 						output +=
                             `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/option[${i + 1}]/@value")
-                            .string(Matchers.equalToIgnoringWhiteSpace("${optionValue}")))
+                            	.string(Matchers.equalToIgnoringWhiteSpace("${optionValue}")))
                             
                             `;
 					}
 
-					const selected = jquery(this).attr('selected');
+					const selected = $(this).attr('selected');
 					if (selected) {
 						output +=
                             `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/option[${i + 1}]/@selected")
-                            .string(Matchers.equalToIgnoringWhiteSpace("${selected}")))
+                            	.string(Matchers.equalToIgnoringWhiteSpace("${selected}")))
                             `;
 					}
 				});

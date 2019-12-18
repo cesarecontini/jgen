@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "auto-format": "^1.1.1",
+    "cheerio": "^1.0.0-rc.3",
     "dexie": "^2.0.4",
     "jquery": "^3.4.1",
     "jsdom": "^15.2.1",
