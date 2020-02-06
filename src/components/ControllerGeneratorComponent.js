@@ -83,7 +83,7 @@ export default class ControllerGeneratorComponent extends React.Component {
                 <Grid columns={1} padded>
                     <Grid.Column>
                         <HeaderComponent title='CONTROLLER GENERATOR'
-                            subTitle='Generate a Spring Controller and optionally its service and test classes.' />
+                            subTitle='Generate a Spring Boot controller and its Junit test class.' />
                     </Grid.Column>
                 </Grid>
                 <Grid columns={2} padded>
@@ -92,14 +92,17 @@ export default class ControllerGeneratorComponent extends React.Component {
                             size="large"
                             onSubmit={this.handleSubmit}>
 
-							<Form.Input
+                            
+                            <Form.Input
                                 label='Controller Name'
                                 placeholder='Controller Name'
                                 name='controllerName'
+                                content='Some content'
                                 value={controllerName}
                                 onChange={this.handleChange}
                             />
-                            <Form.TextArea
+
+                           <Form.TextArea
                                 label="Constants"
 								placeholder='Constants'
 								
@@ -108,6 +111,7 @@ export default class ControllerGeneratorComponent extends React.Component {
                                 value={constants}
                                 onChange={this.handleChange}
                             />
+
 							<Form.TextArea
                                 label="Autowired Services"
 								placeholder='Autowired Services'

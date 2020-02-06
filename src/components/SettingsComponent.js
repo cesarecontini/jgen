@@ -1,7 +1,9 @@
 import React from "react";
 import {
     Form,
-    Grid
+    Grid,
+    Modal,
+    Header
 } from 'semantic-ui-react';
 
 import HeaderComponent from './HeaderComponent';
@@ -9,7 +11,8 @@ import DbService from '../services/DbService';
 
 export default class HtmlToJUnitComponent extends React.Component {
     state = {
-        settings: []
+        settings: [],
+        isSaved: false
     };
 
     dbService = new DbService();
@@ -38,6 +41,9 @@ export default class HtmlToJUnitComponent extends React.Component {
         });
 
         this.dbService.setSettings(settingsTmp);
+        this.setState({
+            isSaved: true
+        })
 
 
     }
@@ -51,7 +57,7 @@ export default class HtmlToJUnitComponent extends React.Component {
                 <Grid columns={1} padded>
                     <Grid.Column>
                         <HeaderComponent title='SYSTEM SETTINGS'
-                            subTitle='Apply settings as requested'
+                            subTitle='Manage base package settings'
                             icon='settings' />
                     </Grid.Column>
                 </Grid>
@@ -73,9 +79,14 @@ export default class HtmlToJUnitComponent extends React.Component {
                                 
                             )}
                             
+                            <Modal
+                                trigger={<Form.Button primary content='SAVE SETTINGS' />}
+                                header='SETTINGS SAVED'
+                                content='Settings have been saved successfully!'
+                                actions={[{ key: 'done', content: 'CLOSE', positive: true }]}
+                            />
                             
-                            <Form.Button primary content='SAVE SETTINGS' />
-
+                            
                         </Form>
                     </Grid.Column>
 
