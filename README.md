@@ -1,3 +1,39 @@
+# JGEN
+
+JGEN is a simple REACT application java development code generation utility.
+
+In particular it can do the following:
+
+* Generate spring boot Junit test methods evaluating HTML provided with by the user
+* Generate Spring Boot controller classes and their initial Junit class skeleton given a set of inputs (Controller name, constants, autowired services, endpoints)
+* Generate Spring Boot service classes and their initial Junit class skeleton given a set of inputs (Controller name, constants, autowired services, endpoints)
+
+To run this app please clone this repository cd into the jgen directory. Then run
+
+```
+yarn start
+```
+
+## Example screenshots
+
+1 HTML to JUNIT TEST
+
+![HTML TO JUNIT before generated test](./html_to_junit_1.PNG "HTML TO JUNIT before generated test")
+
+![HTML TO JUNIT after generated test](./html_to_junit_2.PNG "HTML TO JUNIT befafterore generated test")
+
+2 Controller Generator
+
+![Controller generator](./controller_generator_1.PNG "Controller generator")
+
+![Controller generator with generated classes](./controller_generator_2.PNG "Controller generator with generated classes")
+
+3 Servoce Generator
+
+![Service generator](./service_generator_1.PNG "Service generator")
+
+![Service generator with generated classes](./service_generator_2.PNG "Service generator with generated classes")
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

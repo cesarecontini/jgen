@@ -2,8 +2,7 @@ import React from "react";
 import {
     Form,
     Grid,
-    Modal,
-    Header
+    Modal
 } from 'semantic-ui-react';
 
 import HeaderComponent from './HeaderComponent';
