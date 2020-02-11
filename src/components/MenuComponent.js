@@ -19,6 +19,9 @@ export default class MenuComponent extends React.Component {
 					<Menu.Item as={Link} to="/generate-service">
                         SERVICE GENERATOR
 					</Menu.Item>
+					<Menu.Item as={Link} to="/generate-mys-pages">
+                        MYS PAGES GENERATOR
+					</Menu.Item>
 					<Menu.Item as={Link} to="/settings">
                         SETTINGS
 					</Menu.Item>

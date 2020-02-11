@@ -6,6 +6,7 @@ import MenuComponent from './components/MenuComponent';
 import HtmlToJUnitComponent from './components/HtmlToJUnitComponent';
 import ControllerGeneratorComponent from './components/ControllerGeneratorComponent';
 import ServiceGeneratorComponent from './components/ServiceGeneratorComponent';
+import MysGeneratorComponent from './components/MysGeneratorComponent';
 import SettingsComponent from './components/SettingsComponent';
 
 import DbService from './services/DbService';
@@ -30,6 +31,9 @@ function App() {
 							</Route>
 							<Route path='/generate-service'>
 								<ServiceGeneratorComponent />
+							</Route>
+							<Route path='/generate-mys-pages'>
+								<MysGeneratorComponent />
 							</Route>
 							<Route path='/settings'>
 								<SettingsComponent />
