@@ -34,6 +34,17 @@ export default class MysGeneratorComponent extends React.Component {
         stringVal: `{
             "journeyPrefix": "MyAudit",
             "baseUrl": "/{dispCode}/base",
+            "checkYourAnswersTitle": "Check your answers",
+            "checkYourAnswersSubTitle": "Your survey's answers",
+            "checkYourAnswersText": "<p>Check your answer below and edit them:</p>",
+            "checkYourAnswersUrl": "/cya",
+            "checkYourAnswersPrimaryButtonText": "Continue",
+            "checkYourAnswersPrimaryButtonLinkHref": "/success",
+            "successUrl": "/success",
+            "successMessage": "Success message",
+            "successTitleAfterPanel": "Next steps",
+            "successTextAfterPanel": "Some success text",
+            "successGoBackUrl": "/dashboard",
             "pages" : [
                 {
                     "url": "/page1",
@@ -51,13 +62,13 @@ export default class MysGeneratorComponent extends React.Component {
                             "dataTargets": [],
                             "maxLength": 255,
                             "min": 0,
-                            "max": 255,
+                            "max": 0,
                             "radioOrCheckboxInline": false,
                             "displayMode": "full_column",
                             "isDataTargetSource": false,
                             "htmlChunkBeforeFieldTemplateName": "",
                             "htmlChunkBeforeFieldFragmentName": "",
-                            "validations": ["@NotNull"]
+                            "validations": ["@NotEmpty"]
                         },
                         {
                             "name": "lastName",
@@ -74,6 +85,11 @@ export default class MysGeneratorComponent extends React.Component {
                         {
                             "name": "addressLine1",
                             "label": "Address line 1"
+                        },
+                        {
+                            "name": "dob",
+                            "label": "Date of birth",
+                            "type": "date"
                         }  
                     ]
                 }
@@ -109,19 +125,23 @@ export default class MysGeneratorComponent extends React.Component {
             console.log('E', E)
             options = {};
         }
+        
+        console.log('options', options)
+
         this.setState({options, stringVal})
     }
 
     render() {
-
+        
         return (
             <div>
                 <Grid columns={1} padded>
                     <Grid.Column>
                         <HeaderComponent title='MYS PAGES GENERATOR'
-                            subTitle='Generate constant, controller, form classes from configuration JSON.' />
+                            subTitle='Generate constant, controller, form classes from configuration JSON. Make sure you set the base package in settings page.' />
                     </Grid.Column>
                 </Grid>
+                
                 <Grid columns={2} padded>
                     <Grid.Column>
                         <Form
@@ -150,22 +170,37 @@ export default class MysGeneratorComponent extends React.Component {
                            
 
                             <div>
+                                <i>Copy and pase the following in your SecurityConfig class</i>
+                                <CopyToClipboardComponent 
+                                        title='SECURITY CONFIG ENTRIES TO ADD'
+                                        textToCopy={MysGeneratorService.generateSecurityConfigEntries(this.state.options)} />
+
+                                <i>Copy and pase the following in your  {this.state.options.basePackage }.util.{this.state.options.journeyPrefix }Constants class</i>
                                 <CopyToClipboardComponent 
                                     title='CONSTANTS CLASS' 
                                     textToCopy={MysGeneratorService.generateConstantClass(this.state.options)} />
 
+                                <i>Copy and pase the following in your  {this.state.options.basePackage }.util.{this.state.options.journeyPrefix }PageUtils class</i>
                                 <CopyToClipboardComponent 
                                     title='PAGE UTILS CLASS' 
                                     textToCopy={MysGeneratorService.generatePageUtils(this.state.options)} />
                             
                                 {MysGeneratorService.generateAnnotatedForms(this.state.options).map((f,i)=> {
-                                    return <CopyToClipboardComponent
-                                        key={i}    
-                                        title={`ANNOTATED FORM: ${f.formName}`}
-                                        textToCopy={f.code} />
+                                    return <div>
+                                        <i>Copy and pase the following in your  {this.state.options.basePackage}.{this.state.options.formsPackageName}.{this.state.options.journeyPrefix}Page{i+1}Form class</i>
+                                            <CopyToClipboardComponent
+                                            key={i}    
+                                            title={`ANNOTATED FORM: ${f.formName}`}
+                                                textToCopy={f.code} />
+                                        </div>
                                 })}
 
-
+                                <i>Copy and pase the following in your ValidationMessages.properties file</i>
+                                <CopyToClipboardComponent 
+                                    title='VALIDATION PROPERTIES' 
+                                    textToCopy={MysGeneratorService.validationsProperties.join('\n')} />
+                            
+                                <i>Copy and pase the following in your {this.state.options.basePackage}.{this.state.options.controllersPackageName}.{this.state.options.journeyPrefix}Controller class</i>
                                 <CopyToClipboardComponent 
                                     title='CONTROLLER CLASS' 
                                     textToCopy={MysGeneratorService.generateMysControllerPage(this.state.options)} />
