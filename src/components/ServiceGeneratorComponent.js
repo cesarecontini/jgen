@@ -93,7 +93,7 @@ export default class ServiceGeneratorComponent extends React.Component {
                 <Grid columns={1} padded>
                     <Grid.Column>
                         <HeaderComponent title='SERVICE GENERATOR'
-                            subTitle='Generate a Spring Service and its test classe.' />
+                            subTitle='Generate a Spring Boot Service and its Junit test class.' />
                     </Grid.Column>
                 </Grid>
                 <Grid columns={2} padded>

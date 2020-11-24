@@ -56,7 +56,7 @@ export default class HtmlToJUnitComponent extends React.Component {
                 <Grid columns={1} padded>
                     <Grid.Column>
                         <HeaderComponent title='HTML to JUNIT TEST'
-                            subTitle='Provide your own html and get a test evaluating your html' />
+                            subTitle='Enter the URL path you want to run your JUnit test on and the HTML to evaluate.' />
                     </Grid.Column>
                 </Grid>
                 <Grid columns={2} padded>
