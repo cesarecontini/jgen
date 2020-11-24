@@ -32,10 +32,19 @@ export default class ControllerGeneratorComponent extends React.Component {
         controllerTestClass: null
     };
 
+    metaDataKey = 'ControllerGenerator';
+    dbService = new DbService();
+
     constructor() {
         super();
         
         getSettings().then(bp => this.setState(bp))
+        this.dbService.getMetadata(this.metaDataKey)
+            .then(md => {
+                if(md) {
+                    this.setState(md.values);
+                }
+            });
 
     }
 
@@ -65,6 +74,9 @@ export default class ControllerGeneratorComponent extends React.Component {
             controllerClass: controllerClass,
             controllerTestClass: controllerTestClass
         })
+
+        this.dbService.saveMetadata(this.metaDataKey, {basePackage, controllerName, controllersPackageName, constants, autowiredServices, endpoints});
+
     }
 
     render() {

@@ -7,7 +7,7 @@ import {
 import HeaderComponent from './HeaderComponent';
 import DbService from '../services/DbService';
 
-export default class HtmlToJUnitComponent extends React.Component {
+export default class SettingsComponent extends React.Component {
     state = {
         settings: []
     };

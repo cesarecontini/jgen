@@ -5,12 +5,15 @@ export default class DbService {
 	db = new Dexie('jgen_db');
 
 	constructor() {
-		this.db.version(1)
-			.stores({
-				settings: 'id++,name,value,propertyName'
-			});
+		this.db.version(1).stores({
+			settings: 'id++,name,value,propertyName'
+		});
+		this.db.version(2).stores({
+			metadata: 'key'
+		});
 
 		let settings = this.db.settings;
+		let metadata = this.db.metadata;
 
 		settings.count().then(settingsRecords => {
 			if(settingsRecords === 0) {
@@ -22,6 +25,7 @@ export default class DbService {
 				]);
 			}
 		});
+
 	}
 
 	async getSettings() {
@@ -36,5 +40,20 @@ export default class DbService {
 	async setSettings(settings) {
 		return await this.db.settings
 						.bulkPut(settings);
+	}
+
+	async saveMetadata(key, values) {
+		return await this.db.metadata.get({key}, md => {
+			if(md) {
+				return this.db.metadata.update(key, {values});
+			} else {
+				return this.db.metadata.add({key, values});
+			}
+			
+		});
+	}
+
+	async getMetadata(key) {
+		return await this.db.metadata.get({key});
 	}
 }

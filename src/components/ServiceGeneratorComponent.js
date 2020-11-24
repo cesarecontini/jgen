@@ -31,10 +31,19 @@ export default class ServiceGeneratorComponent extends React.Component {
         serviceTestClass: null
     };
 
+    metaDataKey = 'ServiceGenerator';
+    dbService = new DbService();
+
     constructor() {
         super();
         
         getSettings().then(bp => this.setState(bp))
+        this.dbService.getMetadata(this.metaDataKey)
+            .then(md => {
+                if(md) {
+                    this.setState(md.values);
+                }
+            });
 
     }
 
@@ -64,6 +73,8 @@ export default class ServiceGeneratorComponent extends React.Component {
             serviceClass: serviceClass,
             serviceTestClass: serviceTestClass
         })
+
+        this.dbService.saveMetadata(this.metaDataKey, {basePackage, serviceName, servicesPackageName, constants, autowiredServices, serviceMethods});
     }
 
     render() {

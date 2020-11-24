@@ -7,6 +7,7 @@ import {
 import CopyToClipboardComponent from './CopyToClipboardComponent';
 import HeaderComponent from './HeaderComponent';
 import junitService from '../services/JunitService';
+import DbService from '../services/DbService';
 
 export default class HtmlToJUnitComponent extends React.Component {
     state = {
@@ -19,15 +20,31 @@ export default class HtmlToJUnitComponent extends React.Component {
         junitTest: ''
     };
 
+    metaDataKey = 'htmlToJunit';
+
+    dbService = new DbService();
+
+    constructor() {
+        super();
+
+        this.dbService.getMetadata(this.metaDataKey)
+            .then(md => {
+                if(md) {
+                    this.setState(md.values);
+                }
+            });
+    }
+
     handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
     handleSubmit = () => {
         const { path, html } = this.state;
         const junitTest = junitService(path, html);
-        console.log('junitTest', junitTest);
         this.setState({
             junitTest: junitTest
         })
+
+        this.dbService.saveMetadata(this.metaDataKey, {path, html});
     }
 
     render() {
