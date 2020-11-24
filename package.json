@@ -2,7 +2,7 @@
   "name": "jgen",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/cesarecontini/jgen",
+  "homepage": "https://cesarecontini.github.io/jgen",
   "dependencies": {
     "auto-format": "^1.1.1",
     "cheerio": "^1.0.0-rc.3",
