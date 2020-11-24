@@ -1,8 +1,8 @@
 import Formatter from 'auto-format';
-import * as S from 'string';
+import { camelCase } from 'lodash';
 
 const getClassName = (name) => {
-	return capitalizeFirst(S( name ).camelize().s);
+	return capitalizeFirst(camelCase(name));
 }
 
 const capitalizeFirst = (str) => str.charAt(0).toUpperCase() + str.slice(1);
