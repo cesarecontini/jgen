@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/cesarecontini/jgen/static/css/main.34de6062.chunk.css",
+    "main.js": "/cesarecontini/jgen/static/js/main.2d5bb8a1.chunk.js",
+    "main.js.map": "/cesarecontini/jgen/static/js/main.2d5bb8a1.chunk.js.map",
+    "runtime-main.js": "/cesarecontini/jgen/static/js/runtime-main.06d6f411.js",
+    "runtime-main.js.map": "/cesarecontini/jgen/static/js/runtime-main.06d6f411.js.map",
+    "static/js/2.0e2a5e47.chunk.js": "/cesarecontini/jgen/static/js/2.0e2a5e47.chunk.js",
+    "static/js/2.0e2a5e47.chunk.js.map": "/cesarecontini/jgen/static/js/2.0e2a5e47.chunk.js.map",
+    "index.html": "/cesarecontini/jgen/index.html",
+    "precache-manifest.b9aa34bcc14652dcce71393710c520ec.js": "/cesarecontini/jgen/precache-manifest.b9aa34bcc14652dcce71393710c520ec.js",
+    "service-worker.js": "/cesarecontini/jgen/service-worker.js",
+    "static/css/main.34de6062.chunk.css.map": "/cesarecontini/jgen/static/css/main.34de6062.chunk.css.map",
+    "static/js/2.0e2a5e47.chunk.js.LICENSE.txt": "/cesarecontini/jgen/static/js/2.0e2a5e47.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.06d6f411.js",
+    "static/js/2.0e2a5e47.chunk.js",
+    "static/css/main.34de6062.chunk.css",
+    "static/js/main.2d5bb8a1.chunk.js"
+  ]
+}
